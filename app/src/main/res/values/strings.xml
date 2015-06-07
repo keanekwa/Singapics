@@ -8,4 +8,9 @@
     <string name="hello_world">Hello world!</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="signup">New to Singapics? Sign up here.</string>
+    <string name="login">Login</string>
+    <string name="logindialogmessage">Please wait while we log you into Singapics…</string>
 </resources>
