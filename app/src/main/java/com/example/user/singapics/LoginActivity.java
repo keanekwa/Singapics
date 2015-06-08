@@ -17,12 +17,12 @@ import com.parse.ParseUser;
 
 public class LoginActivity extends Activity {
 
-    TextView mSignUpTextView;
-    EditText userBlank;
-    EditText passBlank;
-    String mUsername;
-    String mPassword;
-    Button mLogin;
+    private TextView mSignUpTextView;
+    private EditText userBlank;
+    private EditText passBlank;
+    private String mUsername;
+    private String mPassword;
+    private Button mLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class LoginActivity extends Activity {
 
         mLogin = (Button) findViewById(R.id.loginButton);
         final ProgressDialog mLoginLoader = new ProgressDialog(LoginActivity.this);
-        mLoginLoader.setMessage(getString(R.string.logindialogmessage));
+        mLoginLoader.setMessage(getString(R.string.login_dialog_message));
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
