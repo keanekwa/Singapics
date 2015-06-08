@@ -13,4 +13,8 @@
     <string name="signup">New to Singapics? Sign up here.</string>
     <string name="login">Login</string>
     <string name="logindialogmessage">Please wait while we log you into Singapics…</string>
+    <string name="join">Join Singapics</string>
+    <string name="subtitle">Celebrate SG50 with a crowd-sourced photobook of our little red dot!</string>
+    <string name="create">Create Account</string>
+    <string name="email">Email</string>
 </resources>
