@@ -20,12 +20,12 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TopPhotosFragment extends Fragment {
+//TODO Do something when list item is pressed
 
     private ListView lvToShow;
     ArrayList <ParseObject> mTopImg = new ArrayList<>();
@@ -50,7 +50,7 @@ public class TopPhotosFragment extends Fragment {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null){
-                    for (int j = 0; j < 9; j++) { //TODO do something if j is 0
+                    for (int j = 0; j < 9; j++) {
                         try{
                         mTopImg.add(parseObjects.get(j));}
                         catch (NullPointerException n){
@@ -69,7 +69,7 @@ public class TopPhotosFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_top_photos, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView);
         ArrayAdapter<ParseObject> adapter;
-        adapter = new TopImgAdapter(getActivity().getApplicationContext(), R.layout.top_photos_list, mTopImg);
+        adapter = new TopImgAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mTopImg);
         lvToShow.setAdapter(adapter);
         return inflater.inflate(R.layout.fragment_top_photos, container, false);
     }
