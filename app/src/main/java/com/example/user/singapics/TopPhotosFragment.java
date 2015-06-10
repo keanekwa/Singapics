@@ -14,12 +14,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TopPhotosFragment extends Fragment {
 
@@ -40,7 +44,22 @@ public class TopPhotosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
+        query.addDescendingOrder("likeNumber");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e==null){
+                    for (int j = 0; j < 9; j++) { //TODO do something if j is 0
+                        try{
+                        mTopImg.add(parseObjects.get(j));}
+                        catch (NullPointerException n){
+                            break;
+                        }
+                    }
 
+                }
+            }});
 
     }
 
