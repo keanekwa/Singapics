@@ -68,7 +68,7 @@ public class BestOfPastFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
-        lvToShow =  (ListView)view.findViewById(R.id.imgListView2);
+        lvToShow =  (ListView)view.findViewById(R.id.imgListView3);
         ArrayAdapter<ParseObject> adapter;
         adapter = new BestOFPastAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mBOP);
         lvToShow.setAdapter(adapter);

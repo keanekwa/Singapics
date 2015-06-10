@@ -67,7 +67,7 @@ public class DayAsSingaporeanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
-        lvToShow =  (ListView)view.findViewById(R.id.imgListView2);
+        lvToShow =  (ListView)view.findViewById(R.id.imgListView4);
         ArrayAdapter<ParseObject> adapter;
         adapter = new DayAsSGeanAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mDAS);
         lvToShow.setAdapter(adapter);
