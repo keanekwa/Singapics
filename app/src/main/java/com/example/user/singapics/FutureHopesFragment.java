@@ -53,7 +53,7 @@ public class FutureHopesFragment extends Fragment {
                     for (int j = 0; j < 9; j++) {
                         try {
                             mFutHopes.add(parseObjects.get(j));
-                        } catch (NullPointerException n) {
+                        } catch (IndexOutOfBoundsException i) {
                             break;
                         }
                     }

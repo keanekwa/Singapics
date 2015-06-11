@@ -53,7 +53,7 @@ public class TopPhotosFragment extends Fragment {
                     for (int j = 0; j < 9; j++) {
                         try{
                         mTopImg.add(parseObjects.get(j));}
-                        catch (NullPointerException n){
+                        catch (IndexOutOfBoundsException i){
                             break;
                         }
                     }

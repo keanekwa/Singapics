@@ -53,7 +53,7 @@ public class DayAsSingaporeanFragment extends Fragment {
                     for (int j = 0; j < 9; j++) {
                         try {
                             mDAS.add(parseObjects.get(j));
-                        } catch (NullPointerException n) {
+                        } catch (IndexOutOfBoundsException i) {
                             break;
                         }
                     }
@@ -66,7 +66,7 @@ public class DayAsSingaporeanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
+        View view = inflater.inflate(R.layout.fragment_day_as_singaporean, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView4);
         ArrayAdapter<ParseObject> adapter;
         adapter = new DayAsSGeanAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mDAS);

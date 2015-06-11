@@ -53,7 +53,7 @@ public class BestOfPastFragment extends Fragment {
                     for (int j = 0; j < 9; j++) {
                         try {
                             mBOP.add(parseObjects.get(j));
-                        } catch (NullPointerException n) {
+                        } catch (IndexOutOfBoundsException i) {
                             break;
                         }
                     }
@@ -67,7 +67,7 @@ public class BestOfPastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
+        View view = inflater.inflate(R.layout.fragment_best_of_past, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView3);
         ArrayAdapter<ParseObject> adapter;
         adapter = new BestOFPastAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mBOP);
