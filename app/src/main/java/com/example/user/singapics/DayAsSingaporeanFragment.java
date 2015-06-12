@@ -49,15 +49,13 @@ public class DayAsSingaporeanFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null) {
-                    for (int j = 0; j < 9; j++) {
-                        try {
-                            mDAS.add(parseObjects.get(j));
-                        } catch (NullPointerException n) {
+                if(e==null){
+                    for (int j = 0; j < parseObjects.size(); j++) {
+                        mDAS.add(parseObjects.get(j));
+                        if (mDAS.size() == 5){
                             break;
                         }
                     }
-
                 }
             }
         });

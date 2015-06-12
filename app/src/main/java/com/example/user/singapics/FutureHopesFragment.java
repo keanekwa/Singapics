@@ -49,15 +49,13 @@ public class FutureHopesFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null) {
-                    for (int j = 0; j < 9; j++) {
-                        try {
-                            mFutHopes.add(parseObjects.get(j));
-                        } catch (NullPointerException n) {
+                if(e==null){
+                    for (int j = 0; j < parseObjects.size(); j++) {
+                        mFutHopes.add(parseObjects.get(j));
+                        if (mFutHopes.size() == 5){
                             break;
                         }
                     }
-
                 }
             }
         });

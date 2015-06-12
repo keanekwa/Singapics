@@ -50,14 +50,12 @@ public class TopPhotosFragment extends Fragment {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null){
-                    for (int j = 0; j < 9; j++) {
-                        try{
-                        mTopImg.add(parseObjects.get(j));}
-                        catch (NullPointerException n){
+                    for (int j = 0; j < parseObjects.size(); j++) {
+                        mTopImg.add(parseObjects.get(j));
+                        if (mTopImg.size() == 5){
                             break;
                         }
                     }
-
                 }
             }});
 

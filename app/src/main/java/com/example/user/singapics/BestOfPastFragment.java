@@ -49,15 +49,13 @@ public class BestOfPastFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                if (e == null) {
-                    for (int j = 0; j < 9; j++) {
-                        try {
-                            mBOP.add(parseObjects.get(j));
-                        } catch (NullPointerException n) {
+                if(e==null){
+                    for (int j = 0; j < parseObjects.size(); j++) {
+                        mBOP.add(parseObjects.get(j));
+                        if (mBOP.size() == 5){
                             break;
                         }
                     }
-
                 }
             }
         });
