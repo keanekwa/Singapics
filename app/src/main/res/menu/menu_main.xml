@@ -4,6 +4,12 @@
       tools:context=".MainActivity">
     <item android:id="@+id/action_logout"
           android:title="@string/action_logout"
+          android:icon="@drawable/logouticon"
+          android:orderInCategory="200"
+          app:showAsAction="ifRoom"/>
+      <item android:id="@+id/action_postNew"
+          android:icon="@drawable/cameraoutline"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          app:showAsAction="ifRoom"
+          android:title="@string/postNew" />
 </menu>

@@ -53,7 +53,6 @@ public class TopPhotosFragment extends Fragment {
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mTopImg.add(parseObjects.get(j));
                         if (mTopImg.size() == 5){
-
                             break;
                         }
                     }
@@ -68,7 +67,7 @@ public class TopPhotosFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_top_photos, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView);
         ArrayAdapter<ParseObject> adapter;
-        adapter = new TopImgAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mTopImg);
+        adapter = new TopImgAdapter(getActivity().getBaseContext(), R.layout.photos_list, mTopImg);
         lvToShow.setAdapter(adapter);
         return inflater.inflate(R.layout.fragment_top_photos, container, false);
     }
@@ -103,11 +102,11 @@ public class TopPhotosFragment extends Fragment {
 
             final ParseObject currentTopImage = mTopPics.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
-            titleTextView.setText(currentTopImage.get("imgTitle").toString());
+            titleTextView.setText(currentTopImage.getString("imgTitle"));
             TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
-            likeNumberTextView.setText(currentTopImage.get("likeNumber").toString());
+            likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
-            subtitleTextView.setText(currentTopImage.get("createdBy").toString());
+            subtitleTextView.setText(currentTopImage.getString("createdBy"));
             subtitleTextView.setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.like_icon),null);
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
