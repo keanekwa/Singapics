@@ -50,9 +50,16 @@ public class TopPhotosFragment extends Fragment {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e==null){
+<<<<<<< HEAD
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mTopImg.add(parseObjects.get(j));
                         if (mTopImg.size() == 5){
+=======
+                    for (int j = 0; j < 9; j++) {
+                        try{
+                        mTopImg.add(parseObjects.get(j));}
+                        catch (IndexOutOfBoundsException i){
+>>>>>>> origin/master
                             break;
                         }
                     }

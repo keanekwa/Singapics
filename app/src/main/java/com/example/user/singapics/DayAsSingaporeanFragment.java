@@ -49,10 +49,18 @@ public class DayAsSingaporeanFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
+<<<<<<< HEAD
                 if(e==null){
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mDAS.add(parseObjects.get(j));
                         if (mDAS.size() == 5){
+=======
+                if (e == null) {
+                    for (int j = 0; j < 9; j++) {
+                        try {
+                            mDAS.add(parseObjects.get(j));
+                        } catch (IndexOutOfBoundsException i) {
+>>>>>>> origin/master
                             break;
                         }
                     }
@@ -64,7 +72,7 @@ public class DayAsSingaporeanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
+        View view = inflater.inflate(R.layout.fragment_day_as_singaporean, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView4);
         ArrayAdapter<ParseObject> adapter;
         adapter = new DayAsSGeanAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mDAS);
