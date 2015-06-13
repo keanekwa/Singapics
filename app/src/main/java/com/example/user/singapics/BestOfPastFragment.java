@@ -21,6 +21,8 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,9 +72,9 @@ public class BestOfPastFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_best_of_past, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView3);
         ArrayAdapter<ParseObject> adapter;
-        adapter = new BestOFPastAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mBOP);
+        adapter = new BestOFPastAdapter(getActivity(), R.layout.photos_list, mBOP);
         lvToShow.setAdapter(adapter);
-        return inflater.inflate(R.layout.fragment_best_of_past, container, false);
+        return view;
     }
 
     @Override
@@ -110,7 +112,6 @@ public class BestOfPastFragment extends Fragment {
             likeNumberTextView.setText(currentTopImage.get("likeNumber").toString());
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(currentTopImage.get("createdBy").toString());
-            subtitleTextView.setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.like_icon),null);
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
             fileObject.getDataInBackground(new GetDataCallback() {
@@ -121,6 +122,7 @@ public class BestOfPastFragment extends Fragment {
                                 .decodeByteArray(
                                         data, 0,
                                         data.length);
+
                         actualImage.setImageBitmap(bmp);
                     }
                 }

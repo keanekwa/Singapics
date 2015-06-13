@@ -25,4 +25,13 @@
     <string name="postNew">Post New Photo</string>
     <string name="logout_dialog_message">Please wait while we log you out of Singapics…</string>
     <string name="title_activity_post_new">Post a New Photo</string>
+    <string name="picdisc">Picture the User has chosen</string>
+    <string name="remove">Remove</string>
+    <string name="takePhoto">Take a New Photo</string>
+    <string name="uploadPhoto">Upload Existing Photo</string>
+    <string name="title">Title</string>
+    <string name="caption">Caption</string>
+    <string name="category">Category</string>
+    <string name="postPhoto">Post Photo</string>
+    <string name="appName">Singapics</string>
 </resources>

@@ -8,7 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/topImgView"
-        android:layout_weight="1.2" />
+        android:layout_weight="1.2"
+        android:layout_marginTop="30dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.05" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -34,6 +41,7 @@
             android:id="@+id/likeNumber"
             android:layout_gravity="right"
             android:layout_weight="0.90"
+            android:drawableRight="@drawable/like_icon"
             android:layout_alignTop="@+id/imgTitle"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

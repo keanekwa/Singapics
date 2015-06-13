@@ -65,9 +65,9 @@ public class FutureHopesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView2);
         ArrayAdapter<ParseObject> adapter;
-        adapter = new FutHopesAdapter(getActivity().getApplicationContext(), R.layout.photos_list, mFutHopes);
+        adapter = new FutHopesAdapter(getActivity(), R.layout.photos_list, mFutHopes);
         lvToShow.setAdapter(adapter);
-        return inflater.inflate(R.layout.fragment_future_hopes, container, false);
+        return view;
     }
 
     @Override
@@ -105,7 +105,6 @@ public class FutureHopesFragment extends Fragment {
             likeNumberTextView.setText(currentTopImage.get("likeNumber").toString());
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(currentTopImage.get("createdBy").toString());
-            subtitleTextView.setCompoundDrawables(null,null,getResources().getDrawable(R.drawable.like_icon),null);
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
             fileObject.getDataInBackground(new GetDataCallback() {
