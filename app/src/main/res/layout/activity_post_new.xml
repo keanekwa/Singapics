@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -6,11 +6,86 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:layout_weight="4"
                 tools:context="com.example.user.singapics.PostNewActivity">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:layout_weight="0">
 
-</RelativeLayout>
+        <Button
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:text="Take a New Photo"
+            android:id="@+id/button"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upload Existing Photo"
+            android:id="@+id/button2"
+            android:layout_alignBottom="@+id/button"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/button"
+            android:layout_toEndOf="@+id/button" />
+    </RelativeLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.003" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:hint="Title"
+        android:textSize="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:hint="Caption"
+        android:inputType="text"
+        android:layout_weight="0.00"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText3"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0"
+        android:hint="Category"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.005" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Post Photo"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.002" />
+
+</LinearLayout>
