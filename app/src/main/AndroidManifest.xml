@@ -31,7 +31,11 @@
         </activity>
         <activity
             android:name=".PostNewActivity"
-            android:label="@string/title_activity_post_new" >
+            android:label="@string/title_activity_post_new"
+            android:parentActivityName="com.example.user.singapics.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.user.singapics.MainActivity" />
         </activity>
     </application>
 
