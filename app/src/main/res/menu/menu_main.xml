@@ -6,7 +6,7 @@
         android:icon="@drawable/cameraoutline"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
-        android:title="@string/postNew" />
+        android:title="@string/post_new_photo" />
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:orderInCategory="99"
