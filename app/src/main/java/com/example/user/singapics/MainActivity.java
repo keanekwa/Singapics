@@ -1,5 +1,6 @@
 package com.example.user.singapics;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -84,10 +85,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.action_postNew) {
+            Intent intent = new Intent(MainActivity.this, PostNewActivity.class);
+            MainActivity.this.startActivity(intent);
+        }
+
+        if (id == R.id.action_settings) {
+            /* todo add settings activity Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            MainActivity.this.startActivity(intent);*/
+        }
+
         if (id == R.id.action_logout) {
+            final ProgressDialog mLogoutLoader = new ProgressDialog(MainActivity.this);
+            mLogoutLoader.setMessage(getString(R.string.logout_dialog_message));
+            mLogoutLoader.show();
             ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
                 @Override
                 public void done(ParseException e) {
+                    mLogoutLoader.dismiss();
                     Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     MainActivity.this.startActivity(intent);
                 }
