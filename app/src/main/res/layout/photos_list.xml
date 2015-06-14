@@ -13,7 +13,8 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
         android:minHeight="230dp"
-        android:maxHeight="230dp" />
+        android:maxHeight="230dp"
+        android:contentDescription="@string/stuff" />
 
     <Space
         android:layout_width="match_parent"
@@ -62,5 +63,27 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginLeft="10dp" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/addHeart"
+            android:layout_gravity="right"
+            android:background="@drawable/addheart"
+            android:layout_alignBottom="@+id/postedBy"
+            android:layout_alignRight="@+id/likeNumber"
+            android:layout_alignEnd="@+id/likeNumber"
+            android:visibility="visible" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/heartAdded"
+            android:layout_gravity="right"
+            android:background="@drawable/addheart"
+            android:layout_alignBottom="@+id/postedBy"
+            android:layout_alignLeft="@+id/addHeart"
+            android:layout_alignStart="@+id/addHeart"
+            android:visibility="invisible" />
     </RelativeLayout>
 </LinearLayout>
