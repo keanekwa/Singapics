@@ -48,13 +48,18 @@ public class TopPhotosFragment extends Fragment {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
         query.addDescendingOrder("likeNumber");
+        query.setLimit(5);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                if(e==null){
-                    for (int j = 0; j < parseObjects.size(); j++) {
+                if(e==null && parseObjects.size()==5){
+                    for (int j = 0; j < 5; j++) {
                         mTopImg.add(parseObjects.get(j));
                         if (mTopImg.size() == 5){
+                            ArrayAdapter<ParseObject> adapter;
+                            adapter = new TopImgAdapter(getActivity(), R.layout.photos_list, mTopImg);
+                            lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                            lvToShow.setAdapter(adapter);
                             break;
                         }
                     }
@@ -68,10 +73,6 @@ public class TopPhotosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_photos, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView);
-        ArrayAdapter<ParseObject> adapter;
-        adapter = new TopImgAdapter(getActivity(), R.layout.photos_list, mTopImg);
-        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        lvToShow.setAdapter(adapter);
 
         return view;
     }
