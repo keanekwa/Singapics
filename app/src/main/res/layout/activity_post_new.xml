@@ -129,12 +129,25 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.005" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.002">
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/postPhoto"
         android:id="@+id/finalizeButton"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.002" />
+         />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loadingSpinner"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
 </LinearLayout>

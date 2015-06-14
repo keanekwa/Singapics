@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 
 public class PostNewActivity extends ActionBarActivity {
@@ -26,6 +28,7 @@ public class PostNewActivity extends ActionBarActivity {
     private EditText mCaptionEditText;
     private Spinner mCategorySpinner;
     private Button mPostButton;
+    private ProgressBar mLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class PostNewActivity extends ActionBarActivity {
         mCaptionEditText = (EditText)findViewById(R.id.captionEditText);
         mCategorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         mPostButton = (Button)findViewById(R.id.finalizeButton);
+        mLoading = (ProgressBar)findViewById(R.id.loadingSpinner);
 
         mPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +52,8 @@ public class PostNewActivity extends ActionBarActivity {
                     Toast.makeText(PostNewActivity.this, "Choose a category", Toast.LENGTH_LONG);
                 }
                 else {
+                    mLoading.setVisibility(View.VISIBLE);
+                    mPostButton.setVisibility(View.INVISIBLE);
                     ParseObject newPost = new ParseObject("allPostings");
                     newPost.put("createdBy", ParseUser.getCurrentUser().getUsername());
                     newPost.put("imgTitle", mTitleEditText.getText().toString());
@@ -66,7 +72,16 @@ public class PostNewActivity extends ActionBarActivity {
                             newPost.put("category", "DayAsSGean");
                             break;
                     }
-                    newPost.saveInBackground();
+                    newPost.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Toast.makeText(PostNewActivity.this, "Post Uploaded!", Toast.LENGTH_LONG);
+                            Intent mainActIntent = new Intent(PostNewActivity.this, MainActivity.class);
+                            mLoading.setVisibility(View.INVISIBLE);
+                            mPostButton.setVisibility(View.VISIBLE);
+                            startActivity(mainActIntent);
+                        }
+                    });
 
                 }
             }
