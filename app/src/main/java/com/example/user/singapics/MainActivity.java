@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
@@ -46,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         ActionBar.LayoutParams layoutParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
         View customNav = LayoutInflater.from(this).inflate(R.layout.actionbar, null); // layout which contains your button.
         actionBar.setCustomView(customNav, layoutParams);
+
 
         if(ParseUser.getCurrentUser()==null){
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);

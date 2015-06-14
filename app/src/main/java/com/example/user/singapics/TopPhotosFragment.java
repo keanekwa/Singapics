@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -68,7 +70,9 @@ public class TopPhotosFragment extends Fragment {
         lvToShow =  (ListView)view.findViewById(R.id.imgListView);
         ArrayAdapter<ParseObject> adapter;
         adapter = new TopImgAdapter(getActivity(), R.layout.photos_list, mTopImg);
+        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         lvToShow.setAdapter(adapter);
+
         return view;
     }
 

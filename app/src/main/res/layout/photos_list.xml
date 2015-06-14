@@ -6,10 +6,14 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="230dp"
         android:id="@+id/topImgView"
-        android:layout_weight="1.2"
-        android:layout_marginTop="30dp" />
+        android:layout_weight="0"
+        android:layout_marginTop="4dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:minHeight="230dp"
+        android:maxHeight="230dp" />
 
     <Space
         android:layout_width="match_parent"

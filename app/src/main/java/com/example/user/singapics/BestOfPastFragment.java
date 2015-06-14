@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -68,11 +70,11 @@ public class BestOfPastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_best_of_past, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView3);
         ArrayAdapter<ParseObject> adapter;
         adapter = new BestOFPastAdapter(getActivity(), R.layout.photos_list, mBOP);
+        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         lvToShow.setAdapter(adapter);
         return view;
     }
@@ -107,11 +109,11 @@ public class BestOfPastFragment extends Fragment {
 
             final ParseObject currentTopImage = mTopPics.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
-            titleTextView.setText(currentTopImage.get("imgTitle").toString());
+            titleTextView.setText(currentTopImage.getString("imgTitle"));
             TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
-            likeNumberTextView.setText(currentTopImage.get("likeNumber").toString());
+            likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
-            subtitleTextView.setText(currentTopImage.get("createdBy").toString());
+            subtitleTextView.setText(currentTopImage.getString("createdBy"));
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
             fileObject.getDataInBackground(new GetDataCallback() {
