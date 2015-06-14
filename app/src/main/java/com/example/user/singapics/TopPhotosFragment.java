@@ -52,10 +52,10 @@ public class TopPhotosFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                if(e==null && parseObjects.size()==5){
-                    for (int j = 0; j < 5; j++) {
+                if(e==null){
+                    for (int j = 0; j < parseObjects.size(); j++) {
                         mTopImg.add(parseObjects.get(j));
-                        if (mTopImg.size() == 5){
+                        if (mTopImg.size() == parseObjects.size()){
                             ArrayAdapter<ParseObject> adapter;
                             adapter = new TopImgAdapter(getActivity(), R.layout.photos_list, mTopImg);
                             lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
@@ -73,7 +73,6 @@ public class TopPhotosFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_photos, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView);
-
         return view;
     }
 

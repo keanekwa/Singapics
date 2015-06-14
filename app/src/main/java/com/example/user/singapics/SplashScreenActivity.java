@@ -20,25 +20,16 @@ public class SplashScreenActivity extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    checkLogin();
+                    if (ParseUser.getCurrentUser()==null){
+                        Intent intent = new Intent (SplashScreenActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                    }
                     Intent i = new Intent(SplashScreenActivity.this,MainActivity.class);
                     startActivity(i);
                 }
             }
         };
         timerThread.start();
-
-    }
-
-
-    public void checkLogin(){
-        if (ParseUser.getCurrentUser()==null)
-        {
-            Intent intent = new Intent (this, LoginActivity.class);
-            this.startActivity(intent);
-
-        }
-
 
     }
 }

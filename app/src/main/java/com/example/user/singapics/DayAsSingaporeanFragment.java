@@ -55,7 +55,7 @@ public class DayAsSingaporeanFragment extends Fragment {
                 if(e==null){
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mDAS.add(parseObjects.get(j));
-                        if (mDAS.size() == 5){
+                        if (mDAS.size() == parseObjects.size()){
                             ArrayAdapter<ParseObject> adapter;
                             adapter = new DayAsSGeanAdapter(getActivity(), R.layout.photos_list, mDAS);
                             lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));

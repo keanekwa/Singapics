@@ -54,7 +54,7 @@ public class FutureHopesFragment extends Fragment {
                 if(e==null){
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mFutHopes.add(parseObjects.get(j));
-                        if (mFutHopes.size() == 5){
+                        if (mFutHopes.size() == parseObjects.size()){
                             ArrayAdapter<ParseObject> adapter;
                             adapter = new FutHopesAdapter(getActivity(), R.layout.photos_list, mFutHopes);
                             lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));

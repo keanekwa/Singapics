@@ -58,7 +58,7 @@ public class BestOfPastFragment extends Fragment {
                 if(e==null){
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mBOP.add(parseObjects.get(j));
-                        if (mBOP.size() == 5){
+                        if (mBOP.size() == parseObjects.size()){
                             ArrayAdapter<ParseObject> adapter;
                             adapter = new BestOFPastAdapter(getActivity(), R.layout.photos_list, mBOP);
                             lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));

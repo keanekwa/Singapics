@@ -16,37 +16,30 @@
         android:layout_weight="0"
         android:id="@+id/mainRL">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:id="@+id/noImgRL"
+            android:weightSum="2"
             android:visibility="visible">
 
             <Button
-                android:layout_width="175dp"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:text="@string/takePhoto"
-                android:id="@+id/takePhotoButton"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true" />
+                android:id="@+id/takePhotoButton" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:text="@string/uploadPhoto"
-                android:id="@+id/uploadPhotoButton"
-                android:layout_alignBottom="@+id/takePhotoButton"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/takePhotoButton"
-                android:layout_toEndOf="@+id/takePhotoButton" />
-        </RelativeLayout>
+                android:id="@+id/uploadPhotoButton" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -119,15 +112,16 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.001" />
 
-    <EditText
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/categoryEditText"
+        android:id="@+id/categorySpinner"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0"
-        android:hint="@string/category"
+        android:entries="@array/category_arrays"
+        android:prompt="@string/category"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"/>
 
     <Space
         android:layout_width="match_parent"

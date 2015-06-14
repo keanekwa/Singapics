@@ -4,7 +4,7 @@
     <string name="title_section1">Top Photos</string>
     <string name="title_section2">Best of the Past</string>
     <string name="title_section3">A Day as a Singaporean</string>
-    <string name="title_section4">Future hopes for Singapore</string>
+    <string name="title_section4">Future Hopes for Singapore</string>
 
     <string name="hello_world">Hello world!</string>
 
@@ -36,4 +36,11 @@
     <string name="appName">Singapics</string>
     <string name="menu">menu</string>
     <string name="stuff">Pic User Has Chosen</string>
+
+    <string-array name="category_arrays">
+        <item>Category</item>
+        <item>@string/title_section2</item>
+        <item>@string/title_section3</item>
+        <item>@string/title_section4</item>
+    </string-array>
 </resources>

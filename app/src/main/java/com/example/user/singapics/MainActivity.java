@@ -151,13 +151,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return new TopPhotosFragment();
+                    return TopPhotosFragment.newInstance();
                 case 1:
-                    return new BestOfPastFragment();
+                    return BestOfPastFragment.newInstance();
                 case 2:
-                    return new DayAsSingaporeanFragment();
+                    return DayAsSingaporeanFragment.newInstance();
                 case 3:
-                    return new FutureHopesFragment();
+                    return FutureHopesFragment.newInstance();
             }
             return null;
         }
