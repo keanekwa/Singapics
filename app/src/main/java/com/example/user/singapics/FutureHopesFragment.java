@@ -47,6 +47,7 @@ public class FutureHopesFragment extends Fragment {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
         query.whereEqualTo("category","FutureHopes");
         query.addDescendingOrder("likeNumber");
+        query.setLimit(5);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -54,7 +55,12 @@ public class FutureHopesFragment extends Fragment {
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mFutHopes.add(parseObjects.get(j));
                         if (mFutHopes.size() == 5){
-                        break;}
+                            ArrayAdapter<ParseObject> adapter;
+                            adapter = new FutHopesAdapter(getActivity(), R.layout.photos_list, mFutHopes);
+                            lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                            lvToShow.setAdapter(adapter);
+                            break;
+                        }
 
             }
         }}});
@@ -65,10 +71,6 @@ public class FutureHopesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView2);
-        ArrayAdapter<ParseObject> adapter;
-        adapter = new FutHopesAdapter(getActivity(), R.layout.photos_list, mFutHopes);
-        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        lvToShow.setAdapter(adapter);
         return view;
     }
 

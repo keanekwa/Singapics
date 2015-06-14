@@ -84,8 +84,10 @@ public class SignUpActivity extends Activity {
 
     }
 
-    public void alertMessage(String Message)
-    {
-        Toast.makeText(SignUpActivity.this, Message, Toast.LENGTH_SHORT).show();
+    public void alertMessage(String message){
+        if (message.startsWith("com.parse.ParseRequest $ParseRequestException: ")){
+            message.replace("com.parse.ParseRequest $ParseRequestException: ", "");
+        }
+        Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 }

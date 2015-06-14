@@ -50,6 +50,7 @@ public class BestOfPastFragment extends Fragment {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
         query.whereEqualTo("category","BestOfPast");
         query.addDescendingOrder("likeNumber");
+        query.setLimit(5);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -58,7 +59,10 @@ public class BestOfPastFragment extends Fragment {
                     for (int j = 0; j < parseObjects.size(); j++) {
                         mBOP.add(parseObjects.get(j));
                         if (mBOP.size() == 5){
-
+                            ArrayAdapter<ParseObject> adapter;
+                            adapter = new BestOFPastAdapter(getActivity(), R.layout.photos_list, mBOP);
+                            lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                            lvToShow.setAdapter(adapter);
                             break;
                         }
                     }
@@ -72,10 +76,6 @@ public class BestOfPastFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_best_of_past, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView3);
-        ArrayAdapter<ParseObject> adapter;
-        adapter = new BestOFPastAdapter(getActivity(), R.layout.photos_list, mBOP);
-        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        lvToShow.setAdapter(adapter);
         return view;
     }
 
