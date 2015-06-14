@@ -77,8 +77,6 @@ public class PostNewActivity extends ActionBarActivity {
                         public void done(ParseException e) {
                             Toast.makeText(PostNewActivity.this, "Post Uploaded!", Toast.LENGTH_LONG);
                             Intent mainActIntent = new Intent(PostNewActivity.this, MainActivity.class);
-                            mLoading.setVisibility(View.INVISIBLE);
-                            mPostButton.setVisibility(View.VISIBLE);
                             startActivity(mainActIntent);
                         }
                     });
