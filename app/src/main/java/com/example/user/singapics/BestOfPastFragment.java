@@ -47,35 +47,20 @@ public class BestOfPastFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
-        query.whereEqualTo("category","BestOfPast");
-        query.addDescendingOrder("likeNumber");
-        query.setLimit(5);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
 
-                if(e==null){
-                    for (int j = 0; j < parseObjects.size(); j++) {
-                        mBOP.add(parseObjects.get(j));
-                        if (mBOP.size() == parseObjects.size()){
-                            ArrayAdapter<ParseObject> adapter;
-                            adapter = new BestOFPastAdapter(getActivity(), R.layout.photos_list, mBOP);
-                            lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                            lvToShow.setAdapter(adapter);
-                            break;
-                        }
-                    }
-                }
-            }
-        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_best_of_past, container, false);
+        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView3);
+        ArrayAdapter<ParseObject> adapter;
+        adapter = new BestOFPastAdapter(getActivity(), R.layout.photos_list, MainActivity.mBOP);
+        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        lvToShow.setAdapter(adapter);
+        lvToShow.addFooterView(buttonView);
         return view;
     }
 
