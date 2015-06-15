@@ -36,6 +36,8 @@
     <string name="appName">Singapics</string>
     <string name="menu">menu</string>
     <string name="stuff">Pic User Has Chosen</string>
+    <string name="likes">likes</string>
+    <string name="space">" "</string>
 
     <string-array name="category_arrays">
         <item>Category</item>

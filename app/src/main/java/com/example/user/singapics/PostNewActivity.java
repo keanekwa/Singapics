@@ -43,7 +43,6 @@ public class PostNewActivity extends ActionBarActivity {
         mCaptionEditText = (EditText)findViewById(R.id.captionEditText);
         mCategorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         mPostButton = (Button)findViewById(R.id.finalizeButton);
-        mLoading = (ProgressBar)findViewById(R.id.loadingSpinner);
 
         mPostButton.setOnClickListener(new View.OnClickListener() {
             @Override

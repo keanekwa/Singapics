@@ -12,5 +12,5 @@
         android:layout_gravity="center_horizontal"
         android:background="#e74c3c"
         android:textColor="#ffffffff"
-        android:textSize="20dp" />
+        />
 </LinearLayout>

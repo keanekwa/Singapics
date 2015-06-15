@@ -13,7 +13,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="182dp"
-        android:layout_weight="0"
         android:id="@+id/mainRL">
 
         <LinearLayout
@@ -74,12 +73,6 @@
 
     </RelativeLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.003" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,50 +82,30 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.001" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/captionEditText"
         android:hint="@string/caption"
         android:inputType="text"
-        android:layout_weight="0.00"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_gravity="center_horizontal" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.001" />
+        />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/categorySpinner"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0"
         android:entries="@array/category_arrays"
         android:prompt="@string/category"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"/>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.005" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.002">
+        >
 
     <Button
         android:layout_width="match_parent"
@@ -140,14 +113,9 @@
         android:text="@string/postPhoto"
         android:id="@+id/finalizeButton"
         android:layout_gravity="center_horizontal"
-         />
+        android:textColor="@color/white"
+        android:background="@color/singapics_red"/>
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loadingSpinner"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -15,15 +15,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DayAsSingaporeanFragment extends Fragment {
 //TODO Do something when list item is pressed
@@ -93,7 +90,7 @@ public class DayAsSingaporeanFragment extends Fragment {
             TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
             titleTextView.setText(currentTopImage.get("imgTitle").toString());
             TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
-            likeNumberTextView.setText(currentTopImage.get("likeNumber").toString());
+            likeNumberTextView.setText(currentTopImage.get("likeNumber").toString() + getString(R.string.space) + getString(R.string.likes));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(currentTopImage.get("createdBy").toString());
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
