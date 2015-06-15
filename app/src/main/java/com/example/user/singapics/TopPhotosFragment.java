@@ -30,6 +30,7 @@ public class TopPhotosFragment extends Fragment {
 //TODO Do something when list item is pressed
 
     private ListView lvToShow;
+    ArrayList <ParseObject> mTopImg = new ArrayList<>();
 
     public static TopPhotosFragment newInstance() {
         TopPhotosFragment fragment = new TopPhotosFragment();
@@ -45,7 +46,25 @@ public class TopPhotosFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
+        query.addDescendingOrder("likeNumber");
+        query.setLimit(5);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e==null){
+                    for (int j = 0; j < parseObjects.size(); j++) {
+                        mTopImg.add(parseObjects.get(j));
+                        if (mTopImg.size() == parseObjects.size()){
+                            ArrayAdapter<ParseObject> adapter;
+                            adapter = new TopImgAdapter(getActivity(), R.layout.photos_list, mTopImg);
+                            lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                            lvToShow.setAdapter(adapter);
+                            break;
+                        }
+                    }
+                }
+            }});
 
     }
 
@@ -53,13 +72,7 @@ public class TopPhotosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_photos, container, false);
-        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView);
-        ArrayAdapter<ParseObject> adapter;
-        adapter = new TopImgAdapter(getActivity(), R.layout.photos_list, MainActivity.mTop);
-        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        lvToShow.setAdapter(adapter);
-        lvToShow.addFooterView(buttonView);
         return view;
     }
 

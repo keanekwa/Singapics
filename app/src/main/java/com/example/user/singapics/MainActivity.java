@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,22 +12,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.internal.app.ToolbarActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
+import android.widget.LinearLayout;
 
-import com.parse.FindCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 
@@ -36,11 +29,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
-    public static ArrayList<ParseObject> mFHF = new ArrayList<>();
-    public static ArrayList<ParseObject> mDAS = new ArrayList<>();
-    public static ArrayList<ParseObject> mBOP = new ArrayList<>();
-    public static ArrayList<ParseObject> mTop = new ArrayList<>();
-    public static  Boolean finishLoad = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,55 +80,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // this tab is selected.
             actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
         }
-
-      new UpdateTask().execute();
-
-    }
-
-    private class UpdateTask extends AsyncTask<Void, Void, Boolean> {
-        @Override
-        protected void onPreExecute(){
-            mTop.clear();
-            mFHF.clear();
-            mBOP.clear();
-            mDAS.clear();
-        }
-        @Override
-        protected Boolean doInBackground(Void... Params) {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
-            query.addDescendingOrder("likeNumber");
-            query.setLimit(15);
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> parseObjects, ParseException e) {
-                    if (e == null) {
-                        for (int j = 0; j < parseObjects.size(); j++) {
-                            mTop.add(parseObjects.get(j));
-                            if (mTop.size() == 6) {
-                                break;
-                            }
-                        }
-                        for (int j = 0; j < parseObjects.size(); j++) {
-                            String category = parseObjects.get(j).getString("category");
-                            switch (category) {
-                                case "BestOfPast":
-                                    if (mBOP.size() != 6) mBOP.add(parseObjects.get(j));
-                                    break;
-                                case "DayAsSGean":
-                                    if (mDAS.size() != 6) mDAS.add(parseObjects.get(j));
-                                    break;
-                                case "FutureHopes":
-                                    if (mFHF.size() != 6) mFHF.add(parseObjects.get(j));
-                                    break;
-                            }
-
-                        }
-                    }
-                }
-            });
-            return true;
-        }
-
     }
 
 

@@ -44,20 +44,35 @@ public class DayAsSingaporeanFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
+        query.whereEqualTo("category","DayAsSGean");
+        query.addDescendingOrder("likeNumber");
+        query.setLimit(5);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
 
+                if(e==null){
+                    for (int j = 0; j < parseObjects.size(); j++) {
+                        mDAS.add(parseObjects.get(j));
+                        if (mDAS.size() == parseObjects.size()){
+                            ArrayAdapter<ParseObject> adapter;
+                            adapter = new DayAsSGeanAdapter(getActivity(), R.layout.photos_list, mDAS);
+                            lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                            lvToShow.setAdapter(adapter);
+                            break;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day_as_singaporean, container, false);
-        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView4);
-        ArrayAdapter<ParseObject> adapter;
-        adapter = new DayAsSGeanAdapter(getActivity(), R.layout.photos_list, MainActivity.mDAS);
-        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-        lvToShow.setAdapter(adapter);
-        lvToShow.addFooterView(buttonView);
         return view;
     }
 
