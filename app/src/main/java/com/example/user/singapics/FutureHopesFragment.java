@@ -44,33 +44,20 @@ public class FutureHopesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
-        query.whereEqualTo("category","FutureHopes");
-        query.addDescendingOrder("likeNumber");
-        query.setLimit(5);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> parseObjects, ParseException e) {
-                if(e==null){
-                    for (int j = 0; j < parseObjects.size(); j++) {
-                        mFutHopes.add(parseObjects.get(j));
-                        if (mFutHopes.size() == parseObjects.size()){
-                            ArrayAdapter<ParseObject> adapter;
-                            adapter = new FutHopesAdapter(getActivity(), R.layout.photos_list, mFutHopes);
-                            lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
-                            lvToShow.setAdapter(adapter);
-                            break;
-                        }
 
-            }
-        }}});
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
+        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView2);
+        ArrayAdapter<ParseObject> adapter;
+        adapter = new FutHopesAdapter(getActivity(), R.layout.photos_list, MainActivity.mFHF);
+        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        lvToShow.setAdapter(adapter);
+        lvToShow.addFooterView(buttonView);
         return view;
     }
 
