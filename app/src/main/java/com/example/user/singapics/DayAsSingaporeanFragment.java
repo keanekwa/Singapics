@@ -48,13 +48,14 @@ public class DayAsSingaporeanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day_as_singaporean, container, false);
-        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView4);
         ArrayAdapter<ParseObject> adapter;
         adapter = new DayAsSGeanAdapter(getActivity(), R.layout.photos_list, MainActivity.mDAS);
         lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         lvToShow.setAdapter(adapter);
-        lvToShow.addFooterView(buttonView);
+        /* 'see more' button
+        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
+        lvToShow.addFooterView(buttonView);*/
         return view;
     }
 

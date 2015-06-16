@@ -48,13 +48,14 @@ public class FutureHopesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_future_hopes, container, false);
-        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
         lvToShow =  (ListView)view.findViewById(R.id.imgListView2);
         ArrayAdapter<ParseObject> adapter;
         adapter = new FutHopesAdapter(getActivity(), R.layout.photos_list, MainActivity.mFHF);
         lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
         lvToShow.setAdapter(adapter);
-        lvToShow.addFooterView(buttonView);
+        /* 'see more' button
+        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
+        lvToShow.addFooterView(buttonView);*/
         return view;
     }
 
