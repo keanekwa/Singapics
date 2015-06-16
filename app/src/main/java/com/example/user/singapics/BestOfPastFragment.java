@@ -23,7 +23,6 @@ import com.parse.ParseObject;
 import java.util.ArrayList;
 
 public class BestOfPastFragment extends Fragment {
-//TODO Do something when list item is pressed
 
     private ListView lvToShow;
     ArrayList <ParseObject> mBOP = new ArrayList<>();
@@ -41,7 +40,6 @@ public class BestOfPastFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
