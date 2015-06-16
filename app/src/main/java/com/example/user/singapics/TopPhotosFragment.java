@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +16,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 
@@ -91,6 +94,26 @@ public class TopPhotosFragment extends Fragment {
             likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));
+            final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView);
+            likeImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    likeImageView.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
+                    //MainActivity.mTop.get(position).put("likeNumber", (currentTopImage.getInt("likeNumber") + 1));
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("allPostings");
+                    query.equals(currentTopImage);
+                    query.getFirstInBackground(new GetCallback<ParseObject>() {
+                        public void done(ParseObject object, ParseException e) {
+                            if (object == null) {
+                                Log.d("add score query failed", e.toString());
+                            } else {
+                                Log.d("passed", "passed");
+                                object.put("likeNumber", (currentTopImage.getInt("likeNumber") + 1));
+                            }
+                        }
+                    });
+                }
+            });
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
             fileObject.getDataInBackground(new GetDataCallback() {
