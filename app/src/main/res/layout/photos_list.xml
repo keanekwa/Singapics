@@ -10,7 +10,8 @@
         android:id="@+id/topImgView"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/stuff" />
+        android:contentDescription="@string/stuff"
+        android:background="#f5f5f5"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

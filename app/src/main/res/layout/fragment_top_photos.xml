@@ -9,5 +9,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/imgListView"
         android:layout_gravity="center"
-        android:clickable="true" />
+        android:listSelector="@android:color/transparent"/>
 </FrameLayout>

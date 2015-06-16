@@ -91,7 +91,7 @@ public class DayAsSingaporeanFragment extends Fragment {
             TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
             likeNumberTextView.setText(currentTopImage.get("likeNumber").toString() + getString(R.string.space) + getString(R.string.likes));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
-            subtitleTextView.setText(currentTopImage.get("createdBy").toString());
+            subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.get("createdBy").toString());
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
             fileObject.getDataInBackground(new GetDataCallback() {

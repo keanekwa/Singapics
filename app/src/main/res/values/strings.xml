@@ -38,7 +38,7 @@
     <string name="stuff">Pic User Has Chosen</string>
     <string name="likes">likes</string>
     <string name="space">" "</string>
-    <string name="posted_by">Posted by:</string>
+    <string name="photo_by">Photo by:</string>
 
     <string-array name="category_arrays">
         <item>Category</item>

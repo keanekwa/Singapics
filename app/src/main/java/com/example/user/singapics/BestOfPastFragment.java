@@ -91,7 +91,7 @@ public class BestOfPastFragment extends Fragment {
             TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
             likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
-            subtitleTextView.setText(currentTopImage.getString("createdBy"));
+            subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
             fileObject.getDataInBackground(new GetDataCallback() {

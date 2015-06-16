@@ -10,5 +10,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/imgListView4"
         android:layout_gravity="center"
-        android:clickable="true" />
+        android:listSelector="@android:color/transparent"/>
 </FrameLayout>
