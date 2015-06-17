@@ -27,14 +27,14 @@
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/takePhoto"
                 android:id="@+id/takePhotoButton" />
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/uploadPhoto"
                 android:id="@+id/uploadPhotoButton" />
@@ -50,8 +50,8 @@
             android:visibility="invisible">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/chosenImage"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
@@ -73,6 +73,10 @@
 
     </RelativeLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,6 +91,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/captionEditText"
         android:hint="@string/caption"
+        android:visibility="gone"
         android:inputType="text"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"

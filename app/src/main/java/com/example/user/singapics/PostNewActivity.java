@@ -11,12 +11,14 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -165,9 +167,20 @@ public class PostNewActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveScaledPhoto(byte[] data) {
-        scaledPhotoFile = null;
+    private void createSquareLayout() {
+        //doesn't work for some reason
+        RelativeLayout mRelativeLayout = (RelativeLayout)findViewById(R.id.mainRL);
 
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        int value = 0;
 
+        if(metrics.widthPixels < metrics.heightPixels){
+            value = metrics.widthPixels;
+        } else {
+            value= metrics.heightPixels;
+        }
+
+        mRelativeLayout.getLayoutParams().height = value;
+        mRelativeLayout.getLayoutParams().width = value;
     }
 }
