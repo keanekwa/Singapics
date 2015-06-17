@@ -19,6 +19,7 @@ import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -87,11 +88,64 @@ public class FutureHopesFragment extends Fragment {
 
             final ParseObject currentTopImage = mTopPics.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
-            titleTextView.setText(currentTopImage.get("imgTitle").toString());
-            TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
-            likeNumberTextView.setText(currentTopImage.get("likeNumber").toString() + getString(R.string.space) + getString(R.string.likes));
+            titleTextView.setText(currentTopImage.getString("imgTitle"));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
-            subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.get("createdBy").toString());
+            subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));
+
+            //set like button status on create
+            final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView);
+            final TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
+            likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
+            final ParseUser mCurrentUser = ParseUser.getCurrentUser();
+            ArrayList<ParseUser> mFirstWhoLikedList = (ArrayList) currentTopImage.get("likeImgPeople");
+            if (mFirstWhoLikedList == null) {
+                mFirstWhoLikedList = new ArrayList<>();
+            }
+            boolean hasLiked = false;
+            for (int i = 0; i < mFirstWhoLikedList.size(); i++) {
+                if (mFirstWhoLikedList.get(i) == mCurrentUser) {
+                    hasLiked = true;
+                    break;
+                }
+            }
+            if (hasLiked) {
+                likeImageView.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
+            }
+            else {
+                likeImageView.setImageDrawable(getResources().getDrawable(R.drawable.like_outline));
+            }
+
+            //when like button is clicked
+            likeImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<ParseUser> mWhoLikedList = (ArrayList) currentTopImage.get("likeImgPeople");
+                    if (mWhoLikedList == null) {
+                        mWhoLikedList = new ArrayList<>();
+                    }
+                    boolean hasLiked = false;
+                    for (int i = 0; i < mWhoLikedList.size(); i++) {
+                        if (mWhoLikedList.get(i) == mCurrentUser) {
+                            hasLiked = true;
+                            break;
+                        }
+                    }
+                    if (hasLiked) {
+                        likeImageView.setImageDrawable(getResources().getDrawable(R.drawable.like_outline));
+                        currentTopImage.put("likeNumber", (currentTopImage.getInt("likeNumber") - 1));
+                        mWhoLikedList.remove(ParseUser.getCurrentUser());
+                        currentTopImage.put("likeImgPeople", mWhoLikedList);
+                    } else {
+                        likeImageView.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
+                        currentTopImage.put("likeNumber", (currentTopImage.getInt("likeNumber") + 1));
+                        mWhoLikedList.add(ParseUser.getCurrentUser());
+                        currentTopImage.put("likeImgPeople", mWhoLikedList);
+                    }
+                    currentTopImage.saveInBackground();
+                    likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
+                }
+            });
+
             ParseFile fileObject = currentTopImage.getParseFile("actualImage");
             final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
             fileObject.getDataInBackground(new GetDataCallback() {
