@@ -120,24 +120,33 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                 break;
                             }
                         }
-                        for (int j = 0; j < parseObjects.size(); j++) {
-                            String category = parseObjects.get(j).getString("category");
-                            switch (category) {
-                                case "BestOfPast":
-                                    if (mBOP.size() != 6) mBOP.add(parseObjects.get(j));
-                                    break;
-                                case "DayAsSGean":
-                                    if (mDAS.size() != 6) mDAS.add(parseObjects.get(j));
-                                    break;
-                                case "FutureHopes":
-                                    if (mFHF.size() != 6) mFHF.add(parseObjects.get(j));
-                                    break;
-                            }
 
-                        }
                     }
                 }
             });
+            ParseQuery<ParseObject> query2 = ParseQuery.getQuery("allPostings");
+            query2.addDescendingOrder("createdAt");
+            query2.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> list, ParseException e) {
+                    for (int j = 0; j < list.size(); j++) {
+                        String category = list.get(j).getString("category");
+                        switch (category) {
+                            case "BestOfPast":
+                                if (mBOP.size() != 6) mBOP.add(list.get(j));
+                                break;
+                            case "DayAsSGean":
+                                if (mDAS.size() != 6) mDAS.add(list.get(j));
+                                break;
+                            case "FutureHopes":
+                                if (mFHF.size() != 6) mFHF.add(list.get(j));
+                                break;
+                        }
+
+                    }
+                }
+            });
+
             return true;
         }
 
