@@ -200,7 +200,7 @@ public class OnNationalDayActivity extends ActionBarActivity {
     }
 
     public void positiveButton() {
-        EditText mPostField = (EditText) mTextEntryView.findViewById(R.id.titleEditText);
+        EditText mPostField = (EditText) mTextEntryView.findViewById(R.id.captionEditText);
         String post = mPostField.getText().toString();
         ParseObject postObject = new ParseObject("onNationalDay");
         postObject.put("postTitle",post);

@@ -88,8 +88,20 @@ public class TopPhotosFragment extends Fragment {
             final ParseObject currentTopImage = mTopPics.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
             titleTextView.setText(currentTopImage.getString("imgTitle"));
-            TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
+            TextView subtitleTextView = (TextView) row.findViewById(R.id.photoBy);
             subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));
+            TextView categoryTextView = (TextView) row.findViewById(R.id.imageCategory);
+            String categoryString = getString(R.string.nothing);
+            if (currentTopImage.getString("category").matches(getString(R.string.best_of_past_category))) {
+                categoryString = getString(R.string.title_section2);
+            }
+            else if (currentTopImage.getString("category").matches(getString(R.string.day_as_sgean_category))) {
+                categoryString = getString(R.string.title_section3);
+            }
+            else if (currentTopImage.getString("category").matches(getString(R.string.future_hopes_category))) {
+                categoryString = getString(R.string.title_section4);
+            }
+            categoryTextView.setText("Category:" + getString(R.string.space) + categoryString);
 
             //set like button status on create
             final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView);

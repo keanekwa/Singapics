@@ -89,8 +89,11 @@ public class FutureHopesFragment extends Fragment {
             final ParseObject currentTopImage = mContent.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
             titleTextView.setText(currentTopImage.getString("imgTitle"));
-            TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
+            TextView subtitleTextView = (TextView) row.findViewById(R.id.photoBy);
             subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));
+            //make category text view disappear since it is not needed
+            TextView categoryTextView = (TextView) row.findViewById(R.id.imageCategory);
+            categoryTextView.setVisibility(View.GONE);
 
             //set like button status on create
             final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView);

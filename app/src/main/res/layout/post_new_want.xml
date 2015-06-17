@@ -26,8 +26,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:id="@+id/titleEditText"
         android:textSize="19dp"
+=======
+        android:id="@+id/captionEditText"
+        android:textSize="20dp"
+>>>>>>> origin/master
         android:hint="@string/enterHere"
         android:maxLines="3"
         android:layout_below="@+id/textView"
@@ -39,8 +44,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
+<<<<<<< HEAD
         android:layout_below="@+id/titleEditText"
         android:id="@+id/relativeLayout">
+=======
+        android:layout_below="@+id/captionEditText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+>>>>>>> origin/master
 
     <Button
         android:layout_width="match_parent"
