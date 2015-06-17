@@ -2,6 +2,7 @@ package com.example.user.singapics;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,7 +10,9 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -32,6 +35,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 
 
 public class PostNewActivity extends ActionBarActivity {
@@ -42,7 +46,6 @@ public class PostNewActivity extends ActionBarActivity {
     private Button mPostButton;
     private Button mTakePhoto;
     private ProgressBar mLoading;
-    private ParseFile scaledPhotoFile;
 
     private LinearLayout mButtonsLayout;
     private RelativeLayout mImageLayout;
@@ -50,8 +53,10 @@ public class PostNewActivity extends ActionBarActivity {
     private byte[] chosenPic;
     private ImageView chosenPicPrevew;
     private Button mRemoveButton;
+    private Button mUploadButton;
 
-    static public int TAKE_PHOTO_CODE = 21;
+    private static int TAKE_PHOTO_CODE = 21;
+    private static int UPLOAD_PHOTO_CODE = 25;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,7 @@ public class PostNewActivity extends ActionBarActivity {
         mImageLayout = (RelativeLayout)findViewById(R.id.picChosenRL);
         chosenPicPrevew = (ImageView)findViewById(R.id.chosenImage);
         mRemoveButton = (Button)findViewById(R.id.removeButton);
+        mUploadButton = (Button)findViewById(R.id.uploadPhotoButton);
 
         setPicChosen(false);
 
@@ -91,6 +97,16 @@ public class PostNewActivity extends ActionBarActivity {
                 startActivityForResult(intent, TAKE_PHOTO_CODE);
             }
 
+        });
+
+        mUploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create intent to Open Image applications like Gallery, Google Photos
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                // Start the Intent
+                startActivityForResult(galleryIntent, UPLOAD_PHOTO_CODE);
+            }
         });
 
         mPostButton.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +141,7 @@ public class PostNewActivity extends ActionBarActivity {
                     Bitmap image = BitmapFactory.decodeByteArray(chosenPic, 0, chosenPic.length);
 
                     // Resize photo
-                    Bitmap imageScaled = Bitmap.createScaledBitmap(image, 200, 200
+                    Bitmap imageScaled = Bitmap.createScaledBitmap(image, 300, 300
                             * image.getHeight() / image.getWidth(), false);
 
                     /* Override Android default landscape orientation and save portrait
@@ -156,7 +172,7 @@ public class PostNewActivity extends ActionBarActivity {
                                 newPost.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
-                                        Toast.makeText(PostNewActivity.this, "Post Uploaded!", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(PostNewActivity.this, "Picture Uploaded!", Toast.LENGTH_LONG).show();
                                         Intent mainActIntent = new Intent(PostNewActivity.this, MainActivity.class);
                                         startActivity(mainActIntent);
                                     }
@@ -176,13 +192,6 @@ public class PostNewActivity extends ActionBarActivity {
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
-        if(requestCode==TAKE_PHOTO_CODE && resultCode==RESULT_OK){
-            chosenPic = intent.getByteArrayExtra("DATA");
-            setPicChosen(true);
-        }
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -210,6 +219,37 @@ public class PostNewActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        if(requestCode==TAKE_PHOTO_CODE && resultCode==RESULT_OK){
+            chosenPic = intent.getByteArrayExtra("DATA");
+            setPicChosen(true);
+        }
+        else if(requestCode==UPLOAD_PHOTO_CODE && resultCode==RESULT_OK){
+            if(intent != null){
+                Uri selectedImage = intent.getData();
+                String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+                // Some cursor magic to fetch the file
+                Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+
+                // Get byte array of Image after decoding the String
+                Bitmap bmp = BitmapFactory.decodeFile(imgDecodableString);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                chosenPic = stream.toByteArray();
+                setPicChosen(true);
+            }
+            else{
+                Toast.makeText(PostNewActivity.this, "No picture chosen", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void loading(Boolean toLoad){
