@@ -46,4 +46,5 @@
         <item>@string/title_section3</item>
         <item>@string/title_section4</item>
     </string-array>
+    <string name="title_activity_camera">CameraActivity</string>
 </resources>

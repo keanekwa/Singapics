@@ -4,41 +4,45 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".SingapicsApplication"
         android:allowBackup="true"
         android:icon="@drawable/singapicsicon"
-        android:theme="@style/AppTheme"
-        android:label="@string/app_name">
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
-
+            android:label="@string/app_name" >
         </activity>
-        <activity
-            android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" >
         </activity>
-        <activity
-            android:name=".SignUpActivity">
+        <activity android:name=".SignUpActivity" >
         </activity>
         <activity
             android:name=".SplashScreenActivity"
-            android:label="@string/appName">
+            android:label="@string/appName" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".PostNewActivity"
             android:label="@string/title_activity_post_new"
-            android:parentActivityName="com.example.user.singapics.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.user.singapics.MainActivity" />
+        </activity>
+        <activity
+            android:name=".CameraActivity"
+            android:label="@string/title_activity_camera" >
         </activity>
     </application>
 

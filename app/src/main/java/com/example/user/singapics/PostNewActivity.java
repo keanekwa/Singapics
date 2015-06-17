@@ -38,8 +38,11 @@ public class PostNewActivity extends ActionBarActivity {
     private EditText mCaptionEditText;
     private Spinner mCategorySpinner;
     private Button mPostButton;
+    private Button mTakePhoto;
     private ProgressBar mLoading;
     private ParseFile scaledPhotoFile;
+
+    static public int TAKE_PHOTO_CODE = 21;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,16 @@ public class PostNewActivity extends ActionBarActivity {
         mCategorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         mPostButton = (Button)findViewById(R.id.finalizeButton);
         mLoading = (ProgressBar)findViewById(R.id.loadingProgressBar);
+        mTakePhoto = (Button)findViewById(R.id.takePhotoButton);
+
+        mTakePhoto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View v){
+                Intent intent = new Intent(PostNewActivity.this, CameraActivity.class);
+                startActivityForResult(intent, TAKE_PHOTO_CODE);
+            }
+
+        });
 
         mPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +76,7 @@ public class PostNewActivity extends ActionBarActivity {
                     Toast.makeText(PostNewActivity.this, "Choose a category", Toast.LENGTH_LONG);
                 }
                 else {
-                    mLoading.setVisibility(View.VISIBLE);
-                    mPostButton.setVisibility(View.INVISIBLE);
+                    loading(true);
                     final ParseObject newPost = new ParseObject("allPostings");
                     newPost.put("createdBy", ParseUser.getCurrentUser().getUsername());
                     newPost.put("imgTitle", mTitleEditText.getText().toString());
@@ -139,6 +151,12 @@ public class PostNewActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        if(requestCode==TAKE_PHOTO_CODE && resultCode==RESULT_OK){
+            byte[] data = intent.getByteArrayExtra("DATA");
+        }
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -167,20 +185,14 @@ public class PostNewActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void createSquareLayout() {
-        //doesn't work for some reason
-        RelativeLayout mRelativeLayout = (RelativeLayout)findViewById(R.id.mainRL);
-
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int value = 0;
-
-        if(metrics.widthPixels < metrics.heightPixels){
-            value = metrics.widthPixels;
-        } else {
-            value= metrics.heightPixels;
+    private void loading(Boolean toLoad){
+        if(toLoad){
+            mLoading.setVisibility(View.VISIBLE);
+            mPostButton.setVisibility(View.INVISIBLE);
         }
-
-        mRelativeLayout.getLayoutParams().height = value;
-        mRelativeLayout.getLayoutParams().width = value;
+        else{
+            mLoading.setVisibility(View.INVISIBLE);
+            mPostButton.setVisibility(View.VISIBLE);
+        }
     }
 }
