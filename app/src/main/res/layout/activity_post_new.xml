@@ -116,6 +116,12 @@
         android:textColor="@color/white"
         android:background="@color/singapics_red"/>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:id="@+id/loadingProgressBar"/>
+
     </RelativeLayout>
 
 </LinearLayout>

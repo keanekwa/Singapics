@@ -2,8 +2,13 @@ package com.example.user.singapics;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,9 +22,12 @@ import android.widget.Toast;
 
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+
+import java.io.ByteArrayOutputStream;
 
 
 public class PostNewActivity extends ActionBarActivity {
@@ -29,6 +37,7 @@ public class PostNewActivity extends ActionBarActivity {
     private Spinner mCategorySpinner;
     private Button mPostButton;
     private ProgressBar mLoading;
+    private ParseFile scaledPhotoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +52,7 @@ public class PostNewActivity extends ActionBarActivity {
         mCaptionEditText = (EditText)findViewById(R.id.captionEditText);
         mCategorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         mPostButton = (Button)findViewById(R.id.finalizeButton);
+        mLoading = (ProgressBar)findViewById(R.id.loadingProgressBar);
 
         mPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +63,7 @@ public class PostNewActivity extends ActionBarActivity {
                 else {
                     mLoading.setVisibility(View.VISIBLE);
                     mPostButton.setVisibility(View.INVISIBLE);
-                    ParseObject newPost = new ParseObject("allPostings");
+                    final ParseObject newPost = new ParseObject("allPostings");
                     newPost.put("createdBy", ParseUser.getCurrentUser().getUsername());
                     newPost.put("imgTitle", mTitleEditText.getText().toString());
                     newPost.put("likeNumber", 0);
@@ -71,15 +81,49 @@ public class PostNewActivity extends ActionBarActivity {
                             newPost.put("category", "DayAsSGean");
                             break;
                     }
-                    newPost.saveInBackground(new SaveCallback() {
-                        @Override
+                    Drawable drawable = getResources().getDrawable(R.drawable.singapicsicon);
+
+                    Bitmap image = ((BitmapDrawable) drawable).getBitmap();
+
+                    // Resize photo
+                    Bitmap imageScaled = Bitmap.createScaledBitmap(image, 200, 200
+                            * image.getHeight() / image.getWidth(), false);
+
+                    /* Override Android default landscape orientation and save portrait
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    Bitmap rotatedScaledImage = Bitmap.createBitmap(imageScaled, 0,
+                            0, imageScaled.getWidth(), imageScaled.getHeight(),
+                            matrix, true);*/
+
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    //rotatedScaledImage.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    imageScaled.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+
+                    byte[] scaledData = bos.toByteArray();
+
+                    // Save the scaled image to Parse
+                    final ParseFile photoFile = new ParseFile("test_photo.jpg", scaledData);
+                    photoFile.saveInBackground(new SaveCallback() {
+
                         public void done(ParseException e) {
-                            Toast.makeText(PostNewActivity.this, "Post Uploaded!", Toast.LENGTH_LONG);
-                            Intent mainActIntent = new Intent(PostNewActivity.this, MainActivity.class);
-                            startActivity(mainActIntent);
+                            if (e != null) {
+                                Toast.makeText(PostNewActivity.this,
+                                        "Error saving: " + e.getMessage(),
+                                        Toast.LENGTH_LONG).show();
+                            } else {
+                                newPost.put("actualImage", photoFile);
+                                newPost.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Toast.makeText(PostNewActivity.this, "Post Uploaded!", Toast.LENGTH_LONG).show();
+                                        Intent mainActIntent = new Intent(PostNewActivity.this, MainActivity.class);
+                                        startActivity(mainActIntent);
+                                    }
+                                });
+                            }
                         }
                     });
-
                 }
             }
         });
@@ -119,5 +163,11 @@ public class PostNewActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveScaledPhoto(byte[] data) {
+        scaledPhotoFile = null;
+
+
     }
 }
