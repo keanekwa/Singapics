@@ -22,7 +22,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/titleEditText"
+        android:id="@+id/captionEditText"
         android:textSize="20dp"
         android:hint="@string/enterHere"
         android:maxLines="3"
@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:layout_below="@+id/titleEditText"
+        android:layout_below="@+id/captionEditText"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
 

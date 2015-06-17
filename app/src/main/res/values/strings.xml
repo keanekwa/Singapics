@@ -29,7 +29,6 @@
     <string name="remove">Remove</string>
     <string name="takePhoto">Take a New Photo</string>
     <string name="uploadPhoto">Upload Existing Photo</string>
-    <string name="title">Title</string>
     <string name="caption">Caption</string>
     <string name="category">Category</string>
     <string name="postPhoto">Post Photo</string>
@@ -52,7 +51,7 @@
     <string name="placeholderName">John Smith</string>
     <string name="enterHere">Enter Here</string>
     <string name="post">Post</string>
-    <string name="onNatDay">On National Day, what do you want to do?</string>
+    <string name="onNatDay">On Singapore\'s 50th birthday, I want to…</string>
     <string name="best_of_past_category">BestOfPast</string>
     <string name="day_as_sgean_category">DayAsSGean</string>
     <string name="future_hopes_category">FutureHopes</string>
