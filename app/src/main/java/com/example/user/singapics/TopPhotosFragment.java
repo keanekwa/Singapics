@@ -72,10 +72,10 @@ public class TopPhotosFragment extends Fragment {
         private int mResource;
         private ArrayList<ParseObject> mTopPics;
 
-        public TopImgAdapter(Context context, int resource, ArrayList<ParseObject> achievementTitles) {
-            super(context, resource, achievementTitles);
+        public TopImgAdapter(Context context, int resource, ArrayList<ParseObject> topPics) {
+            super(context, resource, topPics);
             mResource = resource;
-            mTopPics = achievementTitles;
+            mTopPics = topPics;
         }
 
         //display subject data in every row of listView
@@ -86,7 +86,7 @@ public class TopPhotosFragment extends Fragment {
             }
 
             final ParseObject currentTopImage = mTopPics.get(position);
-            TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
+            TextView titleTextView = (TextView) row.findViewById(R.id.userWant);
             titleTextView.setText(currentTopImage.getString("imgTitle"));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));

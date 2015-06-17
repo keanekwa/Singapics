@@ -71,12 +71,12 @@ public class BestOfPastFragment extends Fragment {
     private class BestOFPastAdapter extends ArrayAdapter<ParseObject> {
         //creating variables
         private int mResource;
-        private ArrayList<ParseObject> mTopPics;
+        private ArrayList<ParseObject> mContent;
 
-        public BestOFPastAdapter(Context context, int resource, ArrayList<ParseObject> achievementTitles) {
-            super(context, resource, achievementTitles);
+        public BestOFPastAdapter(Context context, int resource, ArrayList<ParseObject> bestOfPast) {
+            super(context, resource, bestOfPast);
             mResource = resource;
-            mTopPics = achievementTitles;
+            mContent = bestOfPast;
         }
 
         //display subject data in every row of listView
@@ -86,8 +86,8 @@ public class BestOfPastFragment extends Fragment {
                 row = LayoutInflater.from(getContext()).inflate(mResource, parent, false);
             }
 
-            final ParseObject currentTopImage = mTopPics.get(position);
-            TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
+            final ParseObject currentTopImage = mContent.get(position);
+            TextView titleTextView = (TextView) row.findViewById(R.id.userWant);
             titleTextView.setText(currentTopImage.getString("imgTitle"));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));

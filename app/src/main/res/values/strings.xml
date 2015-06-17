@@ -46,5 +46,11 @@
         <item>@string/title_section3</item>
         <item>@string/title_section4</item>
     </string-array>
-    <string name="title_activity_camera">CameraActivity</string>
+    <string name="title_activity_camera">Take A Photo</string>
+    <string name="title_activity_on_national_day">Wishes</string>
+    <string name="placeholder">SG so nice</string>
+    <string name="placeholderName">John Smith</string>
+    <string name="enterHere">Enter Here</string>
+    <string name="post">Post</string>
+    <string name="onNatDay">On National Day, what do you want to do?</string>
 </resources>

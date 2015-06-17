@@ -1,82 +1,95 @@
 package com.example.user.singapics;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.parse.GetDataCallback;
+import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DayAsSingaporeanFragment extends Fragment {
 
+public class OnNationalDayActivity extends ActionBarActivity {
+
+    public static ArrayList<ParseObject> mPosts = new ArrayList<>();
     private ListView lvToShow;
-    ArrayList <ParseObject> mDAS = new ArrayList<>();
-
-    public static DayAsSingaporeanFragment newInstance() {
-        DayAsSingaporeanFragment fragment = new DayAsSingaporeanFragment();
-
-        return fragment;
-    }
-
-    public DayAsSingaporeanFragment() {
-        // Required empty public constructor
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.activity_on_national_day);
+        final android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#e74c3c")));
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_day_as_singaporean, container, false);
-        lvToShow =  (ListView)view.findViewById(R.id.imgListView4);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("onNationalDay");
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (e == null) {
+                    for (int j = 0; j < parseObjects.size(); j++) {
+                        mPosts.add(parseObjects.get(j));
+                    }
+
+                }
+            }
+        });
+
+        lvToShow =  (ListView)findViewById(R.id.postListView);
         ArrayAdapter<ParseObject> adapter;
-        adapter = new DayAsSGeanAdapter(getActivity(), R.layout.photos_list, MainActivity.mDAS);
-        lvToShow.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+        adapter = new wantAdapter(this, R.layout.want_list, mPosts);
         lvToShow.setAdapter(adapter);
-        /* 'see more' button
-        View buttonView = inflater.inflate(R.layout.footer_view, container, false);
-        lvToShow.addFooterView(buttonView);*/
-        return view;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_on_national_day, menu);
+        return true;
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    private class DayAsSGeanAdapter extends ArrayAdapter<ParseObject> {
+    private class wantAdapter extends ArrayAdapter<ParseObject> {
         //creating variables
         private int mResource;
-        private ArrayList<ParseObject> mContent;
+        private ArrayList<ParseObject> mPosts;
 
-        public DayAsSGeanAdapter(Context context, int resource, ArrayList<ParseObject> dayAsSGean) {
-            super(context, resource, dayAsSGean);
+        public wantAdapter(Context context, int resource, ArrayList<ParseObject> postObjects) {
+            super(context, resource, postObjects);
             mResource = resource;
-            mContent = dayAsSGean;
+            mPosts = postObjects;
         }
 
         //display subject data in every row of listView
@@ -86,17 +99,12 @@ public class DayAsSingaporeanFragment extends Fragment {
                 row = LayoutInflater.from(getContext()).inflate(mResource, parent, false);
             }
 
-            final ParseObject currentTopImage = mContent.get(position);
+            final ParseObject currentTopImage = mPosts.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.userWant);
-            titleTextView.setText(currentTopImage.getString("imgTitle"));
-            TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
-            subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));
-
-            //set like button status on create
+            titleTextView.setText(currentTopImage.getString("postTitle"));
+            final ParseUser mCurrentUser = ParseUser.getCurrentUser();
             final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView);
             final TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
-            likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
-            final ParseUser mCurrentUser = ParseUser.getCurrentUser();
             ArrayList<ParseUser> mFirstWhoLikedList = (ArrayList) currentTopImage.get("likeImgPeople");
             if (mFirstWhoLikedList == null) {
                 mFirstWhoLikedList = new ArrayList<>();
@@ -146,21 +154,6 @@ public class DayAsSingaporeanFragment extends Fragment {
                 }
             });
 
-            ParseFile fileObject = currentTopImage.getParseFile("actualImage");
-            final ImageView actualImage = (ImageView) row.findViewById(R.id.topImgView);
-            fileObject.getDataInBackground(new GetDataCallback() {
-                @Override
-                public void done(byte[] data, ParseException e) {
-                    if (e == null) {
-                        Bitmap bmp = BitmapFactory
-                                .decodeByteArray(
-                                        data, 0,
-                                        data.length)
-                                ;
-                        actualImage.setImageBitmap(bmp);
-                    }
-                }
-            });
             return row;
         }
     }
