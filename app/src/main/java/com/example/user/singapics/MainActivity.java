@@ -172,6 +172,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             MainActivity.this.startActivity(intent);
         }
 
+        if (id == R.id.action_newPost) {
+            Intent intent = new Intent(MainActivity.this, OnNationalDayActivity.class);
+            MainActivity.this.startActivity(intent);
+        }
+
         if (id == R.id.action_settings) {
             /* todo add settings activity Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             MainActivity.this.startActivity(intent);*/
