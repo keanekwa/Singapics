@@ -49,6 +49,7 @@ public class PostNewActivity extends ActionBarActivity {
     private boolean isPicChosen;
     private byte[] chosenPic;
     private ImageView chosenPicPrevew;
+    private Button mRemoveButton;
 
     static public int TAKE_PHOTO_CODE = 21;
 
@@ -70,8 +71,18 @@ public class PostNewActivity extends ActionBarActivity {
         mButtonsLayout = (LinearLayout)findViewById(R.id.noImgLL);
         mImageLayout = (RelativeLayout)findViewById(R.id.picChosenRL);
         chosenPicPrevew = (ImageView)findViewById(R.id.chosenImage);
+        mRemoveButton = (Button)findViewById(R.id.removeButton);
 
         setPicChosen(false);
+
+        mRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isPicChosen){
+                    setPicChosen(false);
+                }
+            }
+        });
 
         mTakePhoto.setOnClickListener(new View.OnClickListener(){
             @Override
