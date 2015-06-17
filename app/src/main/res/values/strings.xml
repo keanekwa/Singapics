@@ -38,7 +38,7 @@
     <string name="stuff">Pic User Has Chosen</string>
     <string name="likes">likes</string>
     <string name="space">" "</string>
-    <string name="photo_by">Photo by:</string>
+    <string name="photo_by">Photo by</string>
 
     <string-array name="category_arrays">
         <item>Category</item>
@@ -53,4 +53,7 @@
     <string name="enterHere">Enter Here</string>
     <string name="post">Post</string>
     <string name="onNatDay">On National Day, what do you want to do?</string>
+    <string name="best_of_past_category">BestOfPast</string>
+    <string name="day_as_sgean_category">DayAsSGean</string>
+    <string name="future_hopes_category">FutureHopes</string>
 </resources>
