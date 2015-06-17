@@ -10,8 +10,11 @@ import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 
 public class CameraActivity extends ActionBarActivity {
@@ -44,6 +47,7 @@ public class CameraActivity extends ActionBarActivity {
         mSurfaceView.getLayoutParams().height = value;
         mSurfaceView.getLayoutParams().width = value;
 
+        //set shutter button
         mImageView = (ImageView)findViewById(R.id.camera_photo_button);
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +63,10 @@ public class CameraActivity extends ActionBarActivity {
 
                     @Override
                     public void onPictureTaken(byte[] data, Camera camera) {
+                        Toast.makeText(CameraActivity.this, "Picture captured",
+                                Toast.LENGTH_LONG).show();
+                        camera.stopPreview();
+                        camera.release();
                         Intent resultIntent = new Intent();
                         resultIntent.putExtra("DATA", data);
                         setResult(RESULT_OK, resultIntent);
@@ -67,6 +75,33 @@ public class CameraActivity extends ActionBarActivity {
 
                 });
             }
+        });
+
+        SurfaceHolder holder = mSurfaceView.getHolder();
+        holder.addCallback(new Callback() {
+
+            public void surfaceCreated(SurfaceHolder holder) {
+                try {
+                    if (camera != null) {
+                        camera.setDisplayOrientation(0);
+                        camera.setPreviewDisplay(holder);
+                        camera.startPreview();
+                    }
+                } catch (IOException e) {
+                    Toast.makeText(CameraActivity.this, "Picture captured",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            public void surfaceChanged(SurfaceHolder holder, int format,
+                                       int width, int height) {
+                // nothing to do here
+            }
+
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                // nothing here
+            }
+
         });
     }
 

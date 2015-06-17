@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -42,6 +44,12 @@ public class PostNewActivity extends ActionBarActivity {
     private ProgressBar mLoading;
     private ParseFile scaledPhotoFile;
 
+    private LinearLayout mButtonsLayout;
+    private RelativeLayout mImageLayout;
+    private boolean isPicChosen;
+    private byte[] chosenPic;
+    private ImageView chosenPicPrevew;
+
     static public int TAKE_PHOTO_CODE = 21;
 
     @Override
@@ -59,6 +67,11 @@ public class PostNewActivity extends ActionBarActivity {
         mPostButton = (Button)findViewById(R.id.finalizeButton);
         mLoading = (ProgressBar)findViewById(R.id.loadingProgressBar);
         mTakePhoto = (Button)findViewById(R.id.takePhotoButton);
+        mButtonsLayout = (LinearLayout)findViewById(R.id.noImgLL);
+        mImageLayout = (RelativeLayout)findViewById(R.id.picChosenRL);
+        chosenPicPrevew = (ImageView)findViewById(R.id.chosenImage);
+
+        setPicChosen(false);
 
         mTakePhoto.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -73,7 +86,10 @@ public class PostNewActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if(String.valueOf(mCategorySpinner.getSelectedItem()).equals("Category")){
-                    Toast.makeText(PostNewActivity.this, "Choose a category", Toast.LENGTH_LONG);
+                    Toast.makeText(PostNewActivity.this, "Choose a category", Toast.LENGTH_LONG).show();
+                }
+                else if (!isPicChosen){
+                    Toast.makeText(PostNewActivity.this, "Choose or take a picture", Toast.LENGTH_LONG).show();
                 }
                 else {
                     loading(true);
@@ -95,9 +111,7 @@ public class PostNewActivity extends ActionBarActivity {
                             newPost.put("category", "DayAsSGean");
                             break;
                     }
-                    Drawable drawable = getResources().getDrawable(R.drawable.singapicsicon);
-
-                    Bitmap image = ((BitmapDrawable) drawable).getBitmap();
+                    Bitmap image = BitmapFactory.decodeByteArray(chosenPic, 0, chosenPic.length);
 
                     // Resize photo
                     Bitmap imageScaled = Bitmap.createScaledBitmap(image, 200, 200
@@ -117,7 +131,8 @@ public class PostNewActivity extends ActionBarActivity {
                     byte[] scaledData = bos.toByteArray();
 
                     // Save the scaled image to Parse
-                    final ParseFile photoFile = new ParseFile("test_photo.jpg", scaledData);
+                    String fileName = ParseUser.getCurrentUser().getUsername() + "_photo.jpg";
+                    final ParseFile photoFile = new ParseFile(fileName, scaledData);
                     photoFile.saveInBackground(new SaveCallback() {
 
                         public void done(ParseException e) {
@@ -153,7 +168,8 @@ public class PostNewActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){
         if(requestCode==TAKE_PHOTO_CODE && resultCode==RESULT_OK){
-            byte[] data = intent.getByteArrayExtra("DATA");
+            chosenPic = intent.getByteArrayExtra("DATA");
+            setPicChosen(true);
         }
     }
     @Override
@@ -193,6 +209,21 @@ public class PostNewActivity extends ActionBarActivity {
         else{
             mLoading.setVisibility(View.INVISIBLE);
             mPostButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setPicChosen(Boolean isChosen){
+        if(isChosen && chosenPic!=null){
+            isPicChosen = true;
+            Bitmap bmp = BitmapFactory.decodeByteArray(chosenPic, 0, chosenPic.length);
+            chosenPicPrevew.setImageBitmap(bmp);
+            mButtonsLayout.setVisibility(View.INVISIBLE);
+            mImageLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            mButtonsLayout.setVisibility(View.VISIBLE);
+            mImageLayout.setVisibility(View.INVISIBLE);
+            isPicChosen = false;
         }
     }
 }
