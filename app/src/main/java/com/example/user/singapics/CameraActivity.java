@@ -49,11 +49,11 @@ public class CameraActivity extends ActionBarActivity {
         //makes the camera view square
         mSurfaceView = (SurfaceView)findViewById(R.id.camera_surface_view);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int value = 0;
-        if(metrics.widthPixels < metrics.heightPixels)value = metrics.widthPixels;
-        else value= metrics.heightPixels;
-        mSurfaceView.getLayoutParams().height = value;
-        mSurfaceView.getLayoutParams().width = value;
+        int height = 0;
+        int width = metrics.widthPixels;
+        height = (width/4) * 3;
+        mSurfaceView.getLayoutParams().height = height;
+        mSurfaceView.getLayoutParams().width = width;
 
         //set shutter button
         mImageView = (ImageView)findViewById(R.id.camera_photo_button);
