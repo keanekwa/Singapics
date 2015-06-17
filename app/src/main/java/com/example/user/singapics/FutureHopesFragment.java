@@ -87,7 +87,7 @@ public class FutureHopesFragment extends Fragment {
             }
 
             final ParseObject currentTopImage = mContent.get(position);
-            TextView titleTextView = (TextView) row.findViewById(R.id.userWant);
+            TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
             titleTextView.setText(currentTopImage.getString("imgTitle"));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));

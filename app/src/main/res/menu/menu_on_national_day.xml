@@ -4,4 +4,9 @@
     tools:context="com.example.user.singapics.OnNationalDayActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_newPost"
+        android:icon="@drawable/plussign"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        android:title="@string/post" />
 </menu>

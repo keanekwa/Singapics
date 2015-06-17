@@ -7,7 +7,7 @@
         android:orderInCategory="2"
         app:showAsAction="ifRoom"
         android:title="@string/post_new_photo" />
-    <item android:id="@+id/action_newPost"
+    <item android:id="@+id/action_Posts"
         android:icon="@drawable/singapicsicon"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"

@@ -13,12 +13,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.internal.app.ToolbarActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toolbar;
 
 import com.parse.FindCallback;
 import com.parse.LogOutCallback;
@@ -172,7 +170,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             MainActivity.this.startActivity(intent);
         }
 
-        if (id == R.id.action_newPost) {
+        if (id == R.id.action_Posts) {
             Intent intent = new Intent(MainActivity.this, OnNationalDayActivity.class);
             MainActivity.this.startActivity(intent);
         }

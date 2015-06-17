@@ -86,7 +86,7 @@ public class TopPhotosFragment extends Fragment {
             }
 
             final ParseObject currentTopImage = mTopPics.get(position);
-            TextView titleTextView = (TextView) row.findViewById(R.id.userWant);
+            TextView titleTextView = (TextView) row.findViewById(R.id.imgTitle);
             titleTextView.setText(currentTopImage.getString("imgTitle"));
             TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy);
             subtitleTextView.setText(getString(R.string.photo_by) + getString(R.string.space) + currentTopImage.getString("createdBy"));

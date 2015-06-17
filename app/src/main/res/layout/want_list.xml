@@ -28,7 +28,7 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:id="@+id/likeImageView"
+            android:id="@+id/likeImageView2"
             android:src="@drawable/like_outline"
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
@@ -38,19 +38,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="123 likes"
-            android:id="@+id/likeNumber"
+            android:id="@+id/likeNumber2"
             android:textColor="#666"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/likeImageView"
-            android:layout_toEndOf="@+id/likeImageView"
+            android:layout_toRightOf="@+id/likeImageView2"
+            android:layout_toEndOf="@+id/likeImageView2"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/placeholderName"
-            android:id="@+id/postedBy"
+            android:id="@+id/postedBy2"
             android:textColor="#666"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

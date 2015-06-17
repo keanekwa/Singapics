@@ -1,25 +1,31 @@
 package com.example.user.singapics;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,7 @@ public class OnNationalDayActivity extends ActionBarActivity {
 
     public static ArrayList<ParseObject> mPosts = new ArrayList<>();
     private ListView lvToShow;
+    View mTextEntryView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +85,10 @@ public class OnNationalDayActivity extends ActionBarActivity {
             return true;
         }
 
+        if (id == R.id.action_newPost) {
+           Dialog();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -86,10 +97,10 @@ public class OnNationalDayActivity extends ActionBarActivity {
         private int mResource;
         private ArrayList<ParseObject> mPosts;
 
-        public wantAdapter(Context context, int resource, ArrayList<ParseObject> postObjects) {
-            super(context, resource, postObjects);
+        public wantAdapter(Context context, int resource, ArrayList<ParseObject> posts) {
+            super(context, resource, posts);
             mResource = resource;
-            mPosts = postObjects;
+            mPosts = posts;
         }
 
         //display subject data in every row of listView
@@ -102,10 +113,15 @@ public class OnNationalDayActivity extends ActionBarActivity {
             final ParseObject currentTopImage = mPosts.get(position);
             TextView titleTextView = (TextView) row.findViewById(R.id.userWant);
             titleTextView.setText(currentTopImage.getString("postTitle"));
-            final ParseUser mCurrentUser = ParseUser.getCurrentUser();
+            TextView subtitleTextView = (TextView) row.findViewById(R.id.postedBy2);
+            subtitleTextView.setText(currentTopImage.getString("createdBy"));
+
+            //set like button status on create
             final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView);
             final TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
-            ArrayList<ParseUser> mFirstWhoLikedList = (ArrayList) currentTopImage.get("likeImgPeople");
+            likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
+            final ParseUser mCurrentUser = ParseUser.getCurrentUser();
+            ArrayList<ParseUser> mFirstWhoLikedList = (ArrayList) currentTopImage.get("likePeopleArray");
             if (mFirstWhoLikedList == null) {
                 mFirstWhoLikedList = new ArrayList<>();
             }
@@ -127,7 +143,7 @@ public class OnNationalDayActivity extends ActionBarActivity {
             likeImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ArrayList<ParseUser> mWhoLikedList = (ArrayList) currentTopImage.get("likeImgPeople");
+                    ArrayList<ParseUser> mWhoLikedList = (ArrayList) currentTopImage.get("likePeopleArray");
                     if (mWhoLikedList == null) {
                         mWhoLikedList = new ArrayList<>();
                     }
@@ -142,12 +158,12 @@ public class OnNationalDayActivity extends ActionBarActivity {
                         likeImageView.setImageDrawable(getResources().getDrawable(R.drawable.like_outline));
                         currentTopImage.put("likeNumber", (currentTopImage.getInt("likeNumber") - 1));
                         mWhoLikedList.remove(ParseUser.getCurrentUser());
-                        currentTopImage.put("likeImgPeople", mWhoLikedList);
+                        currentTopImage.put("likePeopleArray", mWhoLikedList);
                     } else {
                         likeImageView.setImageDrawable(getResources().getDrawable(R.drawable.like_icon));
                         currentTopImage.put("likeNumber", (currentTopImage.getInt("likeNumber") + 1));
                         mWhoLikedList.add(ParseUser.getCurrentUser());
-                        currentTopImage.put("likeImgPeople", mWhoLikedList);
+                        currentTopImage.put("likePeopleArray", mWhoLikedList);
                     }
                     currentTopImage.saveInBackground();
                     likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
@@ -157,4 +173,49 @@ public class OnNationalDayActivity extends ActionBarActivity {
             return row;
         }
     }
+
+    public void Dialog() {
+        LayoutInflater factory = LayoutInflater.from(this);
+        mTextEntryView = factory.inflate(R.layout.post_new_want, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+               builder.setIcon(R.drawable.singapicslogo)
+                .setTitle("New Post")
+                .setMessage("Please do not spam the post section.")
+                .setView(mTextEntryView)
+
+                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        positiveButton();
+                    }
+                })
+
+                .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                    }
+                })
+                .show();
+        AlertDialog alert = builder.create();
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        nbutton.setBackgroundColor(Color.parseColor("#e74c3c"));
+        pbutton.setBackgroundColor(Color.parseColor("#e74c3c"));
+        nbutton.setTextColor(Color.WHITE);
+        pbutton.setTextColor(Color.WHITE);
+    }
+
+    public void positiveButton() {
+        EditText mPostField = (EditText) mTextEntryView.findViewById(R.id.titleEditText);
+        String post = mPostField.getText().toString();
+        ParseObject postObject = new ParseObject("onNationalDay");
+        postObject.put("postTitle",post);
+        postObject.put("likeNumber",0);
+        postObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                Toast.makeText(OnNationalDayActivity.this,"Posted!",Toast.LENGTH_LONG);
+            }
+        });
+        }
 }
