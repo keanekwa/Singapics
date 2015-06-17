@@ -1,5 +1,6 @@
 package com.example.user.singapics;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class OnNationalDayActivity extends ActionBarActivity {
 
-    public static ArrayList<ParseObject> mPosts = new ArrayList<>();
+    ArrayList<ParseObject> mPosts = new ArrayList<>();
     private ListView lvToShow;
     View mTextEntryView;
 
@@ -117,8 +118,8 @@ public class OnNationalDayActivity extends ActionBarActivity {
             subtitleTextView.setText(currentTopImage.getString("createdBy"));
 
             //set like button status on create
-            final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView);
-            final TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber);
+            final ImageView likeImageView = (ImageView) row.findViewById(R.id.likeImageView2);
+            final TextView likeNumberTextView = (TextView) row.findViewById(R.id.likeNumber2);
             likeNumberTextView.setText(String.valueOf(currentTopImage.getInt("likeNumber")) + getString(R.string.space) + getString(R.string.likes));
             final ParseUser mCurrentUser = ParseUser.getCurrentUser();
             ArrayList<ParseUser> mFirstWhoLikedList = (ArrayList) currentTopImage.get("likePeopleArray");
@@ -177,32 +178,25 @@ public class OnNationalDayActivity extends ActionBarActivity {
     public void Dialog() {
         LayoutInflater factory = LayoutInflater.from(this);
         mTextEntryView = factory.inflate(R.layout.post_new_want, null);
+        Button pbutton = (Button)mTextEntryView.findViewById(R.id.finalizeButton);
+        Button nbutton = (Button)mTextEntryView.findViewById(R.id.backButton);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-               builder.setIcon(R.drawable.singapicslogo)
-                .setTitle("New Post")
-                .setMessage("Please do not spam the post section.")
-                .setView(mTextEntryView)
+        final Dialog alert = new Dialog(this);
+               alert.setTitle("New Post");
+                alert.setContentView(mTextEntryView);
 
-                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        positiveButton();
-                    }
-                })
-
-                .setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                    }
-                })
-                .show();
-        AlertDialog alert = builder.create();
-        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-        nbutton.setBackgroundColor(Color.parseColor("#e74c3c"));
-        pbutton.setBackgroundColor(Color.parseColor("#e74c3c"));
-        nbutton.setTextColor(Color.WHITE);
-        pbutton.setTextColor(Color.WHITE);
+        pbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                positiveButton();
+                alert.dismiss();
+            }
+        });
+        nbutton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
+        alert.show();
     }
 
     public void positiveButton() {
@@ -211,10 +205,11 @@ public class OnNationalDayActivity extends ActionBarActivity {
         ParseObject postObject = new ParseObject("onNationalDay");
         postObject.put("postTitle",post);
         postObject.put("likeNumber",0);
+        postObject.put("createdBy", ParseUser.getCurrentUser().getUsername());
         postObject.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                Toast.makeText(OnNationalDayActivity.this,"Posted!",Toast.LENGTH_LONG);
+                Toast.makeText(OnNationalDayActivity.this,"Posted!",Toast.LENGTH_LONG).show();
             }
         });
         }
