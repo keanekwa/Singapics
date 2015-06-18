@@ -5,6 +5,9 @@
     <string name="title_section2">Best of the Past</string>
     <string name="title_section3">A Day as a Singaporean</string>
     <string name="title_section4">Future Hopes for Singapore</string>
+    <string name="best_of_past_category">BestOfPast</string>
+    <string name="day_as_sgean_category">DayAsSGean</string>
+    <string name="future_hopes_category">FutureHopes</string>
 
     <string name="hello_world">Hello world!</string>
 
