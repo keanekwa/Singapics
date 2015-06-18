@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -27,6 +28,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class PostNewActivity extends ActionBarActivity {
@@ -48,6 +53,9 @@ public class PostNewActivity extends ActionBarActivity {
 
     private static int TAKE_PHOTO_CODE = 21;
     private static int UPLOAD_PHOTO_CODE = 25;
+    private Uri fileUri;
+
+    private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +92,21 @@ public class PostNewActivity extends ActionBarActivity {
         mTakePhoto.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View v){
-                Intent intent = new Intent(PostNewActivity.this, CameraActivity.class);
-                startActivityForResult(intent, TAKE_PHOTO_CODE);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    // Create the File where the photo should go
+                    File photoFile = null;
+                    try {
+                        photoFile = createImageFile();
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+                        startActivityForResult(intent, TAKE_PHOTO_CODE);
+                    }
+                }
             }
 
         });
@@ -231,5 +252,22 @@ public class PostNewActivity extends ActionBarActivity {
             mImageLayout.setVisibility(View.INVISIBLE);
             isPicChosen = false;
         }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
     }
 }
