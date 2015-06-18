@@ -40,6 +40,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public static ArrayList<ParseObject> mTop = new ArrayList<>();
     public static  Boolean finishLoad = false;
 
+    private BestOfPastFragment pastFrag;
+    private DayAsSingaporeanFragment presentFrag;
+    private FutureHopesFragment futureFrag;
+    private TopPhotosFragment topFrag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,13 +229,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return TopPhotosFragment.newInstance();
+                    topFrag = TopPhotosFragment.newInstance();
+                    return topFrag;
                 case 1:
-                    return BestOfPastFragment.newInstance();
+                    pastFrag = BestOfPastFragment.newInstance();
+                    return pastFrag;
                 case 2:
-                    return DayAsSingaporeanFragment.newInstance();
+                    presentFrag = DayAsSingaporeanFragment.newInstance();
+                    return presentFrag;
                 case 3:
-                    return FutureHopesFragment.newInstance();
+                    futureFrag = FutureHopesFragment.newInstance();
+                    return futureFrag;
             }
             return null;
         }
@@ -257,5 +266,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
     }
+
+
+    /*Handles refreshing //TODO:AD's working on this halfway
+    public void timeToRefresh(){
+        if(pastFrag!=null) pastFrag.refresh();
+        if(presentFrag!=null) presentFrag.refresh();
+        if(futureFrag!=null) futureFrag.refresh();
+        if(topFrag!=null) topFrag.refresh();
+    }*/
 
 }
