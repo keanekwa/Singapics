@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -43,7 +42,7 @@ public class PostNewActivity extends ActionBarActivity {
     private Button mTakePhoto;
     private ProgressBar mLoading;
 
-    private LinearLayout mButtonsLayout;
+    private RelativeLayout mButtonsLayout;
     private RelativeLayout mImageLayout;
     private boolean isPicChosen;
     private Bitmap chosenPic;
@@ -72,7 +71,7 @@ public class PostNewActivity extends ActionBarActivity {
         mPostButton = (Button)findViewById(R.id.finalizeButton);
         mLoading = (ProgressBar)findViewById(R.id.loadingProgressBar);
         mTakePhoto = (Button)findViewById(R.id.takePhotoButton);
-        mButtonsLayout = (LinearLayout)findViewById(R.id.noImgLL);
+        mButtonsLayout = (RelativeLayout)findViewById(R.id.noImgLL);
         mImageLayout = (RelativeLayout)findViewById(R.id.picChosenRL);
         chosenPicPrevew = (ImageView)findViewById(R.id.chosenImage);
         mRemoveButton = (Button)findViewById(R.id.removeButton);
