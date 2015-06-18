@@ -46,14 +46,14 @@ public class PostNewActivity extends ActionBarActivity {
     private LinearLayout mButtonsLayout;
     private RelativeLayout mImageLayout;
     private boolean isPicChosen;
-    private byte[] chosenPic;
+    private Bitmap chosenPic;
     private ImageView chosenPicPrevew;
     private Button mRemoveButton;
     private Button mUploadButton;
 
     private static int TAKE_PHOTO_CODE = 21;
     private static int UPLOAD_PHOTO_CODE = 25;
-    private Uri fileUri;
+    private File photoFile;
 
     private String mCurrentPhotoPath;
 
@@ -95,7 +95,7 @@ public class PostNewActivity extends ActionBarActivity {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     // Create the File where the photo should go
-                    File photoFile = null;
+                    photoFile = null;
                     try {
                         photoFile = createImageFile();
                     } catch (IOException ex) {
@@ -150,11 +150,10 @@ public class PostNewActivity extends ActionBarActivity {
                             newPost.put("category", "DayAsSGean");
                             break;
                     }
-                    Bitmap image = BitmapFactory.decodeByteArray(chosenPic, 0, chosenPic.length);
 
                     // Resize photo
-                    Bitmap imageScaled = Bitmap.createScaledBitmap(image, 300, 300
-                            * image.getHeight() / image.getWidth(), false);
+                    Bitmap imageScaled = Bitmap.createScaledBitmap(chosenPic, 300, 300
+                            * chosenPic.getHeight() / chosenPic.getWidth(), false);
 
                     /* Override Android default landscape orientation and save portrait
                     Matrix matrix = new Matrix();
@@ -200,8 +199,11 @@ public class PostNewActivity extends ActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){
         if(requestCode==TAKE_PHOTO_CODE && resultCode==RESULT_OK){
-            chosenPic = intent.getByteArrayExtra("DATA");
-            setPicChosen(true);
+            if(photoFile.exists()){
+                addPicToGallery();
+                chosenPic = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                setPicChosen(true);
+            }
         }
         else if(requestCode==UPLOAD_PHOTO_CODE && resultCode==RESULT_OK){
             if(intent != null){
@@ -216,10 +218,7 @@ public class PostNewActivity extends ActionBarActivity {
                 cursor.close();
 
                 // Get byte array of Image after decoding the String
-                Bitmap bmp = BitmapFactory.decodeFile(imgDecodableString);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                chosenPic = stream.toByteArray();
+                chosenPic = BitmapFactory.decodeFile(imgDecodableString);
                 setPicChosen(true);
             }
             else{
@@ -242,8 +241,7 @@ public class PostNewActivity extends ActionBarActivity {
     private void setPicChosen(Boolean isChosen){
         if(isChosen && chosenPic!=null){
             isPicChosen = true;
-            Bitmap bmp = BitmapFactory.decodeByteArray(chosenPic, 0, chosenPic.length);
-            chosenPicPrevew.setImageBitmap(bmp);
+            chosenPicPrevew.setImageBitmap(chosenPic);
             mButtonsLayout.setVisibility(View.INVISIBLE);
             mImageLayout.setVisibility(View.VISIBLE);
         }
@@ -269,5 +267,13 @@ public class PostNewActivity extends ActionBarActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
+    }
+
+    private void addPicToGallery() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 }
